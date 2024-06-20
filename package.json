@@ -1,6 +1,6 @@
 {
   "name": "@session.js/keypair",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "module": "src/index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

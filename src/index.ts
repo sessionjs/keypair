@@ -30,7 +30,7 @@ export function getKeypairFromSeed(seedHex: string): Keypair {
 }
 
 export function generateSeedHex() {
-  const seed = sodium.randombytes_buf(16, 'hex')
+  return sodium.randombytes_buf(16, 'hex')
 }
 
 // 👇 Credit: https://stackoverflow.com/a/69585881 👇
