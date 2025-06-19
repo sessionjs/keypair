@@ -1,8 +1,35 @@
-import sodium from 'libsodium-wrappers-sumo'
+import { ed25519, edwardsToMontgomeryPriv, edwardsToMontgomeryPub } from '@noble/curves/ed25519'
+import { bytesToHex, hexToBytes, randomBytes } from '@noble/curves/utils'
 
 export type Keypair = {
-  x25519: sodium.KeyPair
-  ed25519: sodium.KeyPair
+  x25519: SodiumKeypair
+  ed25519: SodiumKeypair
+}
+
+export interface SodiumKeypair {
+  privateKey: Uint8Array
+  publicKey: Uint8Array
+  keyType: string
+}
+
+/**
+ * Generate Ed25519 keypair from "seed"
+ * @param seed Seed value
+ * @param includePublicKey Include public key to secret key value (like libsodium)
+ */
+const keyPairFromSeed = (seed: Uint8Array, includePublicKey = true): SodiumKeypair => {
+  let pk = ed25519.getPublicKey(seed)
+  let sk = new Uint8Array(includePublicKey ? 64 : 32)
+  sk.set(seed, 0)
+  if (includePublicKey) {
+    sk.set(pk, 32)
+  }
+  
+  return {
+    keyType: "ed25519",
+    privateKey: sk,
+    publicKey: pk
+  }
 }
 
 export function getKeypairFromSeed(seedHex: string): Keypair {
@@ -11,16 +38,17 @@ export function getKeypairFromSeed(seedHex: string): Keypair {
     seedHex = seedHex.concat('0'.repeat(32))
     seedHex = seedHex.substring(0, privKeyHexLength)
   }
-  const seed = hexToUint8Array(seedHex)
-  const ed25519KeyPair = sodium.crypto_sign_seed_keypair(new Uint8Array(seed))
-  const x25519PublicKey = sodium.crypto_sign_ed25519_pk_to_curve25519(ed25519KeyPair.publicKey)
+  const seed = hexToBytes(seedHex)
+  const ed25519KeyPair = keyPairFromSeed(seed)
+  const x25519PublicKey = edwardsToMontgomeryPub(ed25519KeyPair.publicKey)
+
   const origPub = new Uint8Array(x25519PublicKey)
   const prependedX25519PublicKey = new Uint8Array(33)
   prependedX25519PublicKey.set(origPub, 1)
   prependedX25519PublicKey[0] = 5
-  const x25519SecretKey = sodium.crypto_sign_ed25519_sk_to_curve25519(ed25519KeyPair.privateKey)
+  const x25519SecretKey = edwardsToMontgomeryPriv(ed25519KeyPair.privateKey)
 
-  const x25519KeyPair: sodium.KeyPair = {
+  const x25519KeyPair: SodiumKeypair = {
     keyType: 'x25519',
     publicKey: prependedX25519PublicKey,
     privateKey: x25519SecretKey,
@@ -30,30 +58,5 @@ export function getKeypairFromSeed(seedHex: string): Keypair {
 }
 
 export function generateSeedHex() {
-  return sodium.randombytes_buf(16, 'hex')
+  return bytesToHex(randomBytes(16))
 }
-
-// 👇 Credit: https://stackoverflow.com/a/69585881 👇
-
-const MAP_HEX: { [k: string]: number } = {
-  0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6,
-  7: 7, 8: 8, 9: 9, a: 10, b: 11, c: 12, d: 13,
-  e: 14, f: 15, A: 10, B: 11, C: 12, D: 13,
-  E: 14, F: 15
-}
-
-function hexToUint8Array(hexString: string) {
-  const bytes = new Uint8Array(Math.floor((hexString || '').length / 2))
-  let i
-  for (i = 0; i < bytes.length; i++) {
-    const a = MAP_HEX[hexString[i * 2]]
-    const b = MAP_HEX[hexString[i * 2 + 1]]
-    if (a === undefined || b === undefined) {
-      break
-    }
-    bytes[i] = (a << 4) | b
-  }
-  return i === bytes.length ? bytes : bytes.slice(0, i)
-}
-
-// 👆 Credit: https://stackoverflow.com/a/69585881 👆
