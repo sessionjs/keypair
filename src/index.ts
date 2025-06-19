@@ -41,12 +41,11 @@ export function getKeypairFromSeed(seedHex: string): Keypair {
   const seed = hexToBytes(seedHex)
   const ed25519KeyPair = keyPairFromSeed(seed)
   const x25519PublicKey = edwardsToMontgomeryPub(ed25519KeyPair.publicKey)
-
-  const origPub = new Uint8Array(x25519PublicKey)
-  const prependedX25519PublicKey = new Uint8Array(33)
-  prependedX25519PublicKey.set(origPub, 1)
-  prependedX25519PublicKey[0] = 5
   const x25519SecretKey = edwardsToMontgomeryPriv(ed25519KeyPair.privateKey)
+
+  const prependedX25519PublicKey = new Uint8Array(33)
+  prependedX25519PublicKey.set(x25519PublicKey, 1)
+  prependedX25519PublicKey[0] = 5
 
   const x25519KeyPair: SodiumKeypair = {
     keyType: 'x25519',
