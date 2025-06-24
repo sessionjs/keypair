@@ -4,12 +4,12 @@ Session messenger & Session.js keypairs utilities.
 
 ## type Keypair
 
-Keypair is a pair of two Sodium's KeyPairs: x25519 (curve25519) and ed25519
+Keypair is a pair of two Sodium-like KeyPairs: x25519 (curve25519) and ed25519
 
 ```ts
 type Keypair = {
-  x25519: sodium.KeyPair
-  ed25519: sodium.KeyPair
+  x25519: SodiumKeypair
+  ed25519: SodiumKeypair
 }
 ```
 
@@ -30,7 +30,7 @@ console.log(keypairs.x25519.publicKey) // => 0548054830367d369d94605247999a375db
 
 ## generateSeedHex
 
-Generates random seed and converts it to hex. Under the hood it uses sodium.randombytes_buf.
+Generates random seed and converts it to hex. Under the hood it uses CSPRNG from `@noble/curves`.
 
 ```ts
 import { generateSeedHex } from '@session.js/keypair'
