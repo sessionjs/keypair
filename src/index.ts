@@ -1,5 +1,5 @@
-import { ed25519, edwardsToMontgomeryPriv, edwardsToMontgomeryPub } from '@noble/curves/ed25519'
-import { bytesToHex, hexToBytes, randomBytes } from '@noble/curves/utils'
+import { ed25519 } from '@noble/curves/ed25519.js'
+import { bytesToHex, hexToBytes, randomBytes } from '@noble/curves/utils.js'
 
 export type Keypair = {
   x25519: SodiumKeypair
@@ -40,8 +40,8 @@ export function getKeypairFromSeed(seedHex: string): Keypair {
   }
   const seed = hexToBytes(seedHex)
   const ed25519KeyPair = keyPairFromSeed(seed)
-  const x25519PublicKey = edwardsToMontgomeryPub(ed25519KeyPair.publicKey)
-  const x25519SecretKey = edwardsToMontgomeryPriv(ed25519KeyPair.privateKey)
+  const x25519PublicKey = ed25519.utils.toMontgomery(ed25519KeyPair.publicKey)
+  const x25519SecretKey = ed25519.utils.toMontgomerySecret(ed25519KeyPair.privateKey)
 
   const prependedX25519PublicKey = new Uint8Array(33)
   prependedX25519PublicKey.set(x25519PublicKey, 1)

@@ -1,6 +1,6 @@
 {
   "name": "@session.js/keypair",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Viktor Shchelochkov <hi@hloth.dev> (https://hloth.dev)",
   "repository": {
     "type": "git",
@@ -8,7 +8,7 @@
   },
   "main": "dist/index.js",
   "dependencies": {
-    "@noble/curves": "^1.9.2"
+    "@noble/curves": "^2.0.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
