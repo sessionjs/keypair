@@ -17,15 +17,15 @@ Session ID consists of x25519's public key prepended with `05`.
 
 Ed25519 keypairs are used mainly for messages encryption.
 
-## getKeypairFromSeed
+## getKeysFromSeed
 
-Converts seed hex to Keypair:
+Converts seed hex to Session keys (x25519 & ed25519 keypairs):
 
 ```ts
-import { getKeypairFromSeed } from '@session.js/keypair'
+import { getKeysFromSeed } from '@session.js/keypair'
 
-const keypairs = getKeypairFromSeed('39038c8988db02c1af44e8c847bd9713')
-console.log(keypairs.x25519.publicKey) // => 0548054830367d369d94605247999a375dbd0a0f65fdec5de1535612bcb6d4de452c69
+const keys = getKeysFromSeed('39038c8988db02c1af44e8c847bd9713')
+console.log(keys.x25519.publicKey) // => 0548054830367d369d94605247999a375dbd0a0f65fdec5de1535612bcb6d4de452c69
 ```
 
 ## generateSeedHex
