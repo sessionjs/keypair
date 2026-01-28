@@ -2,14 +2,14 @@
 
 Session messenger & Session.js keypairs utilities.
 
-## type Keypair
+## type SessionKeys
 
-Keypair is a pair of two Sodium-like KeyPairs: x25519 (curve25519) and ed25519
+SessionKeys is two KeyPairs: x25519 (curve25519) and ed25519
 
 ```ts
-type Keypair = {
-  x25519: SodiumKeypair
-  ed25519: SodiumKeypair
+type SessionKeys = {
+  x25519: KeyPair
+  ed25519: KeyPair
 }
 ```
 

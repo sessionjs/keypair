@@ -1,32 +1,34 @@
 {
   "name": "@session.js/keypair",
-  "version": "1.0.6",
+  "type": "module",
+  "description": "Session messenger & Session.js keypairs utilities.",
+  "version": "1.0.7",
   "author": "Viktor Shchelochkov <hi@hloth.dev> (https://hloth.dev)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sessionjs/keypair.git"
+    "url": "git+https://git.hloth.dev/session.js/keypair.git"
+  },
+  "bugs": {
+    "url": "https://git.hloth.dev/session.js/keypair/issues"
+  },
+  "homepage": "https://git.hloth.dev/session.js/keypair#readme",
+  "license": "MIT",
+  "funding": "https://hloth.dev/donate",
+  "scripts": {
+    "build": "rm -rf dist && tsc --project tsconfig.build.json"
   },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts"
+  ],
   "dependencies": {
     "@noble/curves": "^2.0.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "bugs": {
-    "url": "https://github.com/sessionjs/keypair/issues"
-  },
-  "description": "Session messenger & Session.js keypairs utilities.",
-  "files": [
-    "dist/index.js",
-    "dist/index.d.ts"
-  ],
-  "homepage": "https://github.com/sessionjs/keypair#readme",
-  "scripts": {
-    "build": "rm -rf dist && tsc --project tsconfig.build.json"
-  },
-  "type": "module",
-  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/bun": "latest"
   }
