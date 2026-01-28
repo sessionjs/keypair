@@ -1,35 +1,42 @@
 {
-  "name": "@session.js/keypair",
-  "type": "module",
-  "description": "Session messenger & Session.js keypairs utilities.",
-  "version": "1.0.7",
-  "author": "Viktor Shchelochkov <hi@hloth.dev> (https://hloth.dev)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://git.hloth.dev/session.js/keypair.git"
-  },
-  "bugs": {
-    "url": "https://git.hloth.dev/session.js/keypair/issues"
-  },
-  "homepage": "https://git.hloth.dev/session.js/keypair#readme",
-  "license": "MIT",
-  "funding": "https://hloth.dev/donate",
-  "scripts": {
-    "build": "rm -rf dist && tsc --project tsconfig.build.json"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/index.js",
-    "dist/index.d.ts"
-  ],
-  "dependencies": {
-    "@noble/curves": "^2.0.1"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  }
+	"name": "@session.js/keypair",
+	"version": "1.0.8",
+	"description": "Session messenger & Session.js keypairs utilities.",
+	"homepage": "https://git.hloth.dev/session.js/keypair#readme",
+	"bugs": {
+		"url": "https://git.hloth.dev/session.js/keypair/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://git.hloth.dev/session.js/keypair.git"
+	},
+	"funding": "https://hloth.dev/donate",
+	"license": "MIT",
+	"author": "Viktor Shchelochkov <hi@hloth.dev> (https://hloth.dev)",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/index.js",
+		"dist/index.d.ts",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "rm -rf dist && tsc --project tsconfig.build.json"
+	},
+	"dependencies": {
+		"@noble/curves": "^2.0.1"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^2.0.1",
+		"@eslint/js": "^9.39.2",
+		"@types/bun": "latest",
+		"eslint-config-prettier": "^10.1.8",
+		"prettier": "^3.8.0",
+		"typescript-eslint": "^8.53.1"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
 }
